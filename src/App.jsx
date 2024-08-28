@@ -33,40 +33,16 @@ const times = new Map([
 // const [isRestarted, setIsRestarted] = useState(false);
 
 useEffect (() => {
-  setTimeout(() => {
-    // if (currentSeconds === 59) {
-    //   if (currentMinutes + 1 === 60) {
-    //     setCurrentHours(currentHours + 1);
-    //   }
-    //   setCurrentSeconds(currentSeconds - currentSeconds);
-    //   setCurrentMinutes(currentMinutes + 1);
-    // } else if (currentMinutes === 59 && currentSeconds == 59) {
-    //   setCurrentHours(currentHours + 1);
-    //   setCurrentMinutes(currentMinutes-currentMinutes);
-    // } else {
-    //   setCurrentSeconds(currentSeconds + 1);
-    // }
-    // if (isRestarted) {
-    //     setIsStarted(false);
-    //     setIsFinished(false);
-    //     setIsPaused(false);
-    //     setIsRestarted(false);
-    //     setCurrentHours(0);
-    //     setCurrentMinutes(0);
-    //     setCurrentSeconds(0);
-    // } else 
-    
+  setTimeout(() => {  
     if (isStarted && !isPaused && !isFinished) {
       if (currentMinutes > 0 && currentSeconds - 1 === -1) {
         setCurrentMinutes(currentMinutes - 1);
         setCurrentSeconds(59);
       } else if (currentSeconds > 0) {
         setCurrentSeconds(currentSeconds - 1);
-      } else {
-        setIsFinished(true);
       }
     }
-  }, 10);
+  }, 1000);
 });
 
 useEffect(() => {
@@ -94,7 +70,7 @@ function endTimer () {
 }
 
 function pauseTimer() {
-  if (isStarted && !isFinished) {
+  if (isStarted) {
     if (isPaused) {
       setIsPaused(false);
     } else {
@@ -102,8 +78,6 @@ function pauseTimer() {
     } 
   }
 }
-
-
 
 return (<>
   {`Is Started: ${isStarted}, Is Paused: ${isPaused}, Is Finished: ${isFinished}`}
