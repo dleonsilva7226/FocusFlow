@@ -5,10 +5,6 @@ import './styles.css';
 // import viteLogo from '/vite.svg'
 // import './App.css'
 
-// const [currentSeconds, setCurrentSeconds] = useState("oof");
-// const [currentMinutes, setCurrentMinutes] = useState("oof");
-// const [currentHours, setCurrentHours] = useState("oof");
-
 
 //DO THIS IN TAILWIND CSS
 export default function App () {
@@ -18,6 +14,7 @@ const [currentHours, setCurrentHours] = useState(0);
 const [isPaused, setIsPaused] = useState(false);
 const [isFinished, setIsFinished] = useState(false);
 const [isStarted, setIsStarted] = useState(false);
+const [chosenTime, setChosenTime] = useState(0);
 const times = new Map([
   ["fifty", 50],
   ["fortyFive", 45],
@@ -30,7 +27,17 @@ const times = new Map([
   ["ten", 10],
   ["five", 5]
 ]);
-// const [isRestarted, setIsRestarted] = useState(false);
+
+
+useEffect(() => {
+  if (isFinished) {
+    setCurrentHours(0);
+    setCurrentMinutes(0);
+    setCurrentSeconds(0);
+    setIsStarted(false);
+    setIsFinished(true);
+  }
+});
 
 useEffect (() => {
   setTimeout(() => {  
@@ -40,33 +47,50 @@ useEffect (() => {
         setCurrentSeconds(59);
       } else if (currentSeconds > 0) {
         setCurrentSeconds(currentSeconds - 1);
+      } else if (currentMinutes === 0 && currentSeconds === 0) {
+        setIsFinished(true);
+        setIsPaused(false);
       }
     }
-  }, 1000);
+  }, 10);
 });
 
-useEffect(() => {
+// useEffect(() => {
+//   if (isFinished) {
+//     setCurrentHours(0);
+//     setCurrentMinutes(0);
+//     setCurrentSeconds(0);
+//     setIsStarted(false);
+//     setIsFinished(true);
+//     console.log(seconds);
+//   }
+// });
+
+
+function startTimer () {
+  if (currentMinutes !== 0) {
+    setIsStarted(true);
+    setIsPaused(false);
+    setIsFinished(false);
+  }
+}
+
+
+
+function chooseSelectedTime () {
   if (!isStarted) {
     let timerOption = document.getElementById("timerOptions");
     let totalTime = times.get(timerOption.value);
+    console.log(totalTime);
     setCurrentHours(0);
     setCurrentMinutes(totalTime);
     setCurrentSeconds(0);
+    console.log(currentSeconds)
+    setIsStarted(false);
+    setIsFinished(false);
+    setIsPaused(false);
+    setChosenTime(totalTime);
   }
-});
-
-function startTimer () {
-  setIsStarted(true);
-  setIsPaused(false);
-  setIsFinished(false);
-}
-
-function endTimer () {
-  setCurrentHours(0);
-  setCurrentMinutes(0);
-  setCurrentSeconds(0);
-  setIsStarted(false);
-  setIsFinished(true);
 }
 
 function pauseTimer() {
@@ -80,12 +104,15 @@ function pauseTimer() {
 }
 
 return (<>
-  {`Is Started: ${isStarted}, Is Paused: ${isPaused}, Is Finished: ${isFinished}`}
-  
-  <div className = "text-3xl font-bold underline">
+  {/* {`Is Started: ${isStarted}, Is Paused: ${isPaused}, Is Finished: ${isFinished}`} */}
+  <h1 className = "timerTitle">
+    Work Timer
+  </h1>
+  <div className = "timer">
     {('0' + currentHours).slice(-2)} : {('0' + currentMinutes).slice(-2)} : {('0' + currentSeconds).slice(-2)}
   </div>
-  <div className = "timerOptions">
+  
+  <div className = "timerOptionsContainer">
     <select id = "timerOptions">
       <option value = "fifty"> 50 Minutes</option>
       <option value = "fortyFive">45 Minutes</option>
@@ -100,13 +127,14 @@ return (<>
     </select>
   </div>
   <div className = "buttons">
-    <button className = "startButton" onClick = {() => startTimer()}>Start Button</button>
-    <button className = "endButton" onClick = {() => endTimer()}>End Button</button>
-    <button className = "pauseButton" onClick= {() => pauseTimer()}>Pause Button</button>
-    {/* <button className = "restartButton" onClick = {() => setIsRestarted(true)}>Restart Button</button> */}
+    <button className = "chooseTime" onClick = {() => chooseSelectedTime()}>Select Time</button>
+    <button className = "startButton" onClick = {() => startTimer()}>Start</button>
+    <button className = "endButton" onClick = {() => setIsFinished(true)}>End</button>
+    <button className = "pauseButton" onClick= {() => pauseTimer()}>Pause</button>
   </div>
   <div className = "timerEndMessage">
-    {(currentMinutes === 0 && currentSeconds === 0 && isFinished) && "Time's Up! Take a 10 Minute Break!"}
+    {(currentMinutes === 0 && currentSeconds === 0 && isFinished && chosenTime >= 10) && `Time's Up! Set a Break Timer for ${chosenTime/5} Minutes!`}
+    {(currentMinutes === 0 && currentSeconds === 0 && isFinished && chosenTime <= 5) && `Time's Up! Set a Break Timer for ${chosenTime/5} Minute!`}
   </div>
 </>);
 }
