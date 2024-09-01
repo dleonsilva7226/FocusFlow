@@ -6,8 +6,6 @@ import './styles.css';
 // import './App.css'
 //FIGURE OUT A WAY TO IMPORT COMPONENTS
 
-
-//DO THIS IN TAILWIND CSS
 export default function App () {
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const [currentMinutes, setCurrentMinutes] = useState(0);
@@ -16,6 +14,9 @@ export default function App () {
   const [isFinished, setIsFinished] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [chosenTime, setChosenTime] = useState(0);
+  // Set Break and Working Time Message Logic
+  const [isBreak, setIsBreak] = useState(false);
+  const [isWorking, setIsWorking] = useState(false);
   const times = new Map([
     ["fifty", 50],
     ["fortyFive", 45],
@@ -26,7 +27,15 @@ export default function App () {
     ["twenty", 20],
     ["fifteen", 15],
     ["ten", 10],
-    ["five", 5]
+    ["nine", 9],
+    ["eight", 8],
+    ["seven", 7],
+    ["six", 6],
+    ["five", 5],
+    ["four", 4],
+    ["three", 3],
+    ["two", 2],
+    ["one", 1]
   ]);
 
 
@@ -53,20 +62,8 @@ export default function App () {
           setIsPaused(false);
         }
       }
-    }, 10);
+    }, 1000);
   });
-
-  // useEffect(() => {
-  //   if (isFinished) {
-  //     setCurrentHours(0);
-  //     setCurrentMinutes(0);
-  //     setCurrentSeconds(0);
-  //     setIsStarted(false);
-  //     setIsFinished(true);
-  //     console.log(seconds);
-  //   }
-  // });
-
 
   function startTimer () {
     if (currentMinutes !== 0) {
@@ -81,16 +78,18 @@ export default function App () {
   function chooseSelectedTime () {
     if (!isStarted) {
       let timerOption = document.getElementById("timerOptions");
-      let totalTime = times.get(timerOption.value);
-      console.log(totalTime);
-      setCurrentHours(0);
-      setCurrentMinutes(totalTime);
-      setCurrentSeconds(0);
-      console.log(currentSeconds)
-      setIsStarted(false);
-      setIsFinished(false);
-      setIsPaused(false);
-      setChosenTime(totalTime);
+      if (timerOption.value !== "timerDefaultMessage") {
+        let totalTime = times.get(timerOption.value);
+        console.log(totalTime);
+        setCurrentHours(0);
+        setCurrentMinutes(totalTime);
+        setCurrentSeconds(0);
+        console.log(currentSeconds)
+        setIsStarted(false);
+        setIsFinished(false);
+        setIsPaused(false);
+        setChosenTime(totalTime);
+      }
     }
   }
 
@@ -104,38 +103,55 @@ export default function App () {
     }
   }
 
-  return (<>
-    {/* {`Is Started: ${isStarted}, Is Paused: ${isPaused}, Is Finished: ${isFinished}`} */}
-    <h1 className = "timerTitle">
-      Work Timer
-    </h1>
-    <div className = "timer">
-      {('0' + currentHours).slice(-2)} : {('0' + currentMinutes).slice(-2)} : {('0' + currentSeconds).slice(-2)}
+  return (<div className = "overallTimerContainer">
+    <div className = "timerContainer">
+    <div className = "timerInfo">
+      {/* {`Is Started: ${isStarted}, Is Paused: ${isPaused}, Is Finished: ${isFinished}`} */}
+      <div className = "timerTitle">
+        Focus Timer
+      </div>
+      <div className = "timerDisplay">
+        {/* {('0' + currentHours).slice(-2)} :  */}
+        {('0' + currentMinutes).slice(-2)} : {('0' + currentSeconds).slice(-2)}
+      </div>
+      
+      <div className = "timerOptionsContainer">
+        <select id = "timerOptions">
+          <option value = "timerDefaultMessage">--Choose Time Below--</option>
+          <option value = "fifty"> 50 Minutes</option>
+          <option value = "fortyFive">45 Minutes</option>
+          <option value = "forty">40 Minutes</option>
+          <option value = "thirtyFive">35 Minutes</option>
+          <option value = "thirty">30 Minutes</option>
+          <option value = "twentyFive">25 Minutes</option>
+          <option value = "twenty">20 Minutes</option>
+          <option value = "fifteen">15 Minutes</option>          
+          <option value = "ten"> 10 Minutes</option>
+          <option value = "nine">9 Minutes</option>
+          <option value = "eight">8 Minutes</option>
+          <option value = "seven">7 Minutes</option>
+          <option value = "six">6 Minutes</option>
+          <option value = "five">5 Minutes</option>
+          <option value = "four">4 Minutes</option>
+          <option value = "three">3 Minutes</option>
+          <option value = "two">2 Minutes</option>
+          <option value = "one">1 Minute</option>
+        </select>
+      </div>
+      <div className = "buttons">
+        <button className = "timerButton chooseTime" onClick = {() => chooseSelectedTime()}>Set Time</button>
+        <button className = "timerButton startButton" onClick = {() => startTimer()}>Start</button>
+        <button className = "timerButton endButton" onClick = {() => setIsFinished(true)}>End</button>
+        <button className = "timerButton pauseButton" onClick= {() => pauseTimer()}>Pause</button>
+      </div>
+      <div className = "timerMessage">
+        {(!isStarted && !isFinished) && `Not Started!`}
+        {(isStarted && !isFinished && !isPaused) && `Currently Working!`}
+        {(isPaused) && `Paused!`}
+        {(currentMinutes === 0 && currentSeconds === 0 && isFinished) && `Set a Break Timer!`}
+        {/* {(currentMinutes === 0 && currentSeconds === 0 && isFinished && chosenTime <= 5) && `Time's Up! Set a Break Timer for ${chosenTime/5} Minute And Then Start Working!`} */}
+      </div>
     </div>
-    
-    <div className = "timerOptionsContainer">
-      <select id = "timerOptions">
-        <option value = "fifty"> 50 Minutes</option>
-        <option value = "fortyFive">45 Minutes</option>
-        <option value = "forty">40 Minutes</option>
-        <option value = "thirtyFive">35 Minutes</option>
-        <option value = "thirty">30 Minutes</option>
-        <option value = "twentyFive">25 Minutes</option>
-        <option value = "twenty">20 Minutes</option>
-        <option value = "fifteen">15 Minutes</option>
-        <option value = "ten">10 Minutes</option>
-        <option value = "five">5 Minutes</option>
-      </select>
-    </div>
-    <div className = "buttons">
-      <button className = "chooseTime" onClick = {() => chooseSelectedTime()}>Select Time</button>
-      <button className = "startButton" onClick = {() => startTimer()}>Start</button>
-      <button className = "endButton" onClick = {() => setIsFinished(true)}>End</button>
-      <button className = "pauseButton" onClick= {() => pauseTimer()}>Pause</button>
-    </div>
-    <div className = "timerEndMessage">
-      {(currentMinutes === 0 && currentSeconds === 0 && isFinished && chosenTime >= 10) && `Time's Up! Set a Break Timer for ${chosenTime/5} Minutes!`}
-      {(currentMinutes === 0 && currentSeconds === 0 && isFinished && chosenTime <= 5) && `Time's Up! Set a Break Timer for ${chosenTime/5} Minute!`}
-    </div>
-  </>);
+  </div>
+  </div>);
 }
