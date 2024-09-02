@@ -17,16 +17,10 @@ body {
     display: flex;
     height: 400px;
     width: 500px;
-    /* flex-direction: column; */
-    /* align-items: flex-end; */
-    /* justify-content: flex-end; */
     flex: 0 1 auto;
     justify-content: center;
     align-items: center;
-    /* font-family: 'Roboto'; */
-    /* display: flex;
-    flex: 1; */
-    /* background-color:#6CACE4; */
+
     border-radius: 8px;
 }
 
@@ -74,7 +68,6 @@ body {
 
 #timerOptions {
     background-color: #003366;
-    /* border-color: #87CEFA; */
     border: 2px #87CEFA solid;
     color: #FFFFFF;
     font-size: 16px;
