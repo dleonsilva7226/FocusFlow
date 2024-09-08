@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import React from 'react';
-import './styles.css';
+import './Timer/styles.css';
+
+import './Timer/TimerOptions';
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
-//FIGURE OUT A WAY TO IMPORT COMPONENTS
 
 export default function App () {
   const [currentSeconds, setCurrentSeconds] = useState(0);
@@ -17,6 +18,8 @@ export default function App () {
   // Set Break and Working Time Message Logic
   const [isBreak, setIsBreak] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
+
+  //Figure out how to put the stuff below in another class
   const times = new Map([
     ["fifty", 50],
     ["fortyFive", 45],
