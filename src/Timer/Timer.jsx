@@ -5,10 +5,8 @@ import './styles.css';
 import TimerTitle from './TimerTitle';
 import Countdown from './Countdown';
 import TimerOptions from './TimerOptions';
-
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
+import TimerButtonOptions from './TimerButtonOptions';
+import TimerMessage from './TimerMessage';
 
 export default function App () {
   const [currentSeconds, setCurrentSeconds] = useState(0);
@@ -116,6 +114,8 @@ export default function App () {
       <TimerTitle />
       <Countdown currentMinutes={currentMinutes} currentSeconds={currentSeconds}/>
       <TimerOptions />
+      <TimerButtonOptions />
+      <TimerMessage isStarted = {isStarted} isFinished = {isFinished} isPaused = {isPaused} currentMinutes = {currentMinutes} currentSeconds = {currentSeconds}/>
       
       <div className = "timerOptionsContainer">
         <select id = "timerOptions">

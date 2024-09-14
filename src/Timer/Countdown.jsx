@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import React from 'react';
 import './styles.css';
 
+
 export default function Countdown ({currentMinutes,currentSeconds}) {
     return (
         <div className = "timerDisplay">

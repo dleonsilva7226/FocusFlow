@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import React from 'react';
 import './styles.css';
 
-function TimerOptions () {
+export default function TimerOptions () {
     return (
         <div className = "timerOptionsContainer">
         <select id = "timerOptions">
@@ -28,7 +28,7 @@ function TimerOptions () {
         </select>
       </div>
       
+
     );
 }
 
-export default TimerOptions;
