@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import React from 'react';
 import './styles.css';
 
-function TimerTitle() {
-
+export default function TimerTitle() {
+    return (
+        <div className = "timerTitle">
+            Focus Timer
+        </div>
+    );
 }
-
-
-export default TimerTitle;
