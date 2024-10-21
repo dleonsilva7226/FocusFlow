@@ -62,11 +62,15 @@ export default function App () {
     <div className = "timerContainer">
     <div className = "timerInfo">
       <TimerTitle />
-      {/* <Countdown currentMinutes={currentMinutes} currentSeconds={currentSeconds}/> */}
-      <TimerLogic currentMinutes = {currentMinutes} currentSeconds = {currentSeconds} isStarted = {isStarted} isPaused = {isPaused} isFinished = {isFinished}/>
+      <TimerLogic 
+      currentMinutes = {currentMinutes} 
+      currentSeconds = {currentSeconds} 
+      isStarted = {isStarted} 
+      isPaused = {isPaused} 
+      isFinished = {isFinished}
+      />
       <TimerOptions />
-      {/* BUTTON OPTIONS BELOW */}
-      <div className = "buttons">
+      <div className = "buttons">{/* BUTTON OPTIONS TO MAKE THE TIMER HAVE DIFFERENT FUNCTIONS*/}
         <button className = "timerButton chooseTime" onClick = {() => chooseSelectedTime()}>Set Time</button>
         <button className = "timerButton startButton" onClick = {() => setIsStarted(true)}>Start</button>
         <button className = "timerButton endButton" onClick = {() => setIsFinished(true)}>End</button>
