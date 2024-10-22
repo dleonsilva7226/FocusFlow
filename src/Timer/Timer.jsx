@@ -15,7 +15,7 @@ export default function App () {
   const [isStarted, setIsStarted] = useState(false);
   const [chosenTime, setChosenTime] = useState(0);
 
-  //Figure out how to put the stuff below in another class
+  //Figure out how to put the stuff below in another class and to call it to set it
   const times = new Map([
     ["fifty", 50],
     ["fortyFive", 45],
@@ -37,19 +37,31 @@ export default function App () {
     ["one", 1]
   ]);
 
+  //Call these functions in the child class to update status here directly
+  function setMinutesVar (updatedMins) {setCurrentMinutes(updatedMins);}
+
+  function setSecondsVar (updatedSecs) {setCurrentSeconds(updatedSecs);}
+
+  function setPausedVar(updatedPause) {setIsPaused(updatedPause);} 
+  
+  function setFinishedVar(updatedFinished) {setIsFinished(updatedFinished);} 
+
+  function setStartVar(updatedStart) {setIsStarted(updatedStart);} 
+
+
   function chooseSelectedTime () {
     if (!isStarted) {
       let timerOption = document.getElementById("timerOptions");
       if (timerOption.value !== "timerDefaultMessage") {
         let totalTime = times.get(timerOption.value);
-        console.log(totalTime);
+        // console.log(totalTime);
         setCurrentMinutes(totalTime);
         setCurrentSeconds(0);
-        console.log(currentSeconds)
+        // console.log(currentSeconds);
         setIsStarted(false);
         setIsFinished(false);
         setIsPaused(false);
-        setChosenTime(totalTime);
+        // setChosenTime(totalTime);
       }
     }
   }
@@ -62,12 +74,19 @@ export default function App () {
     <div className = "timerContainer">
     <div className = "timerInfo">
       <TimerTitle />
+      
+      {/* USE FUNCTIONS HERE AND CALL THEM IN TimerLogic to Update Everything */}
       <TimerLogic 
       currentMinutes = {currentMinutes} 
       currentSeconds = {currentSeconds} 
       isStarted = {isStarted} 
       isPaused = {isPaused} 
       isFinished = {isFinished}
+      updateMinsFunc = {setMinutesVar}
+      updateSecsFunc = {setSecondsVar}
+      updatePausedFunction = {setPausedVar}
+      updateFinishedFunction = {setFinishedVar}
+      updateStartedFunction = {setStartVar}
       />
       <TimerOptions />
       <div className = "buttons">{/* BUTTON OPTIONS TO MAKE THE TIMER HAVE DIFFERENT FUNCTIONS*/}
@@ -76,7 +95,13 @@ export default function App () {
         <button className = "timerButton endButton" onClick = {() => setIsFinished(true)}>End</button>
         <button className = "timerButton pauseButton" onClick= {() => setIsPaused(true)}>Pause</button>
       </div>
-      <TimerMessage isStarted = {isStarted} isFinished = {isFinished} isPaused = {isPaused} currentMinutes = {currentMinutes} currentSeconds = {currentSeconds}/>
+      <TimerMessage 
+      isStarted = {isStarted} 
+      isFinished = {isFinished} 
+      isPaused = {isPaused} 
+      currentMinutes = {currentMinutes} 
+      currentSeconds = {currentSeconds}
+      />
     </div>
   </div>
   </div>);

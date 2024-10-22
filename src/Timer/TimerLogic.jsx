@@ -4,7 +4,7 @@ import './styles.css';
 
 import Countdown from './Countdown';
 
-export default function TimerLogic (currentMinutes, currentSeconds, isStarted, isPaused, isFinished) {
+export default function TimerLogic (currentMinutes, currentSeconds, isStarted, isPaused, isFinished, ) {
 
 const [seconds, setSeconds] = useState(currentMinutes);
 const [minutes, setMinutes] = useState(currentSeconds);
@@ -42,9 +42,10 @@ function startTimer () { //Timer Begins Running Until 0 Minutes and 0 Seconds ar
     setFinishedStatus(true);
   }
 
-    //SETTING VARIABLES
-
-    if (started && !paused && !finished) {startTimer();}
-    if (finished) {endTimer();}
+    //SETTING VARIABLES. USE INHERITANCE TO GET THE PARENT FUNCTION AND UPDATE VARIABLES
+    if (isStarted && !isPaused && !isFinished) {startTimer();}
+    if (isFinished) {endTimer();}
+    console.log(minutes);
+    console.log(seconds);
     return (<Countdown currentMinutes={minutes} currentSeconds={seconds}/>);
 }
