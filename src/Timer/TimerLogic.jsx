@@ -4,7 +4,7 @@ import './styles.css';
 
 import Countdown from './Countdown';
 
-export default function TimerLogic (currentMinutes, currentSeconds, isStarted, isPaused, isFinished, ) {
+export default function TimerLogic (currentMinutes, currentSeconds, isStarted, isPaused, isFinished, updateMinsFunc, updateSecsFunc, updatePausedFunction, updateFinishedFunction, updateStartedFunction) {
 
 const [seconds, setSeconds] = useState(currentMinutes);
 const [minutes, setMinutes] = useState(currentSeconds);
@@ -45,7 +45,15 @@ function startTimer () { //Timer Begins Running Until 0 Minutes and 0 Seconds ar
     //SETTING VARIABLES. USE INHERITANCE TO GET THE PARENT FUNCTION AND UPDATE VARIABLES
     if (isStarted && !isPaused && !isFinished) {startTimer();}
     if (isFinished) {endTimer();}
-    console.log(minutes);
-    console.log(seconds);
+    //Passing as an object for some reason here
+    console.log("Minutes:" + currentMinutes);
+    console.log("Seconds: " + currentSeconds);
+
+    //Error with these functions right here
+    // updateMinsFunc(minutes);
+    // updateSecsFunc(seconds);
+    // updatePausedFunction(paused);
+    // updateFinishedFunction(finished);
+    // updateStartedFunction(started);
     return (<Countdown currentMinutes={minutes} currentSeconds={seconds}/>);
 }

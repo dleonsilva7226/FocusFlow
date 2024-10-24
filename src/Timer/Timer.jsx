@@ -76,7 +76,11 @@ export default function App () {
       <TimerTitle />
       
       {/* USE FUNCTIONS HERE AND CALL THEM IN TimerLogic to Update Everything */}
+
+      {/* TEST CASE BELOW */}
+      {/* {console.log(currentMinutes + " Minutes here")} */}
       <TimerLogic 
+      
       currentMinutes = {currentMinutes} 
       currentSeconds = {currentSeconds} 
       isStarted = {isStarted} 
